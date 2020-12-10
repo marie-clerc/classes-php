@@ -11,7 +11,7 @@ $marie = new user();
 
 //-------------------------------------------------------------------------
 
-$marie->connect('marie', 'pass');
+$marie->connect('marieM', 'pass');
 
 //dump les infos dans un tableau
 
@@ -20,7 +20,9 @@ $marie->connect('marie', 'pass');
 
 //$marie->delete();
 
-$marie->update('marieM', 'pass','marie.clerc@laplateforme.io','MMarie', 'clerc');
+//$marie->update('marieM', 'pass','marie.clerc@laplateforme.io','MMarie', 'clerc');
+
+$marie->isConnected();
 
 
 

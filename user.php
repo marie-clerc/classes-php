@@ -171,6 +171,19 @@ class user
         else echo 'remplir tous les champs';
     }
 
+    /*----------------------------------------------------------------------------------------------------*/
+
+
+    public function isConnected()
+    { 
+        if ($this->id != Null)
+        {
+            echo 'L\'utilisateur ' .$this->login. ' est connecté.';
+            return true;
+        }
+        else echo 'pas d\'utilisateur connecté';
+    }
+
 
 
 
@@ -178,10 +191,6 @@ class user
 }
 
 /*
-
-- public function update($login, $password, $email, $firstname,
-lastname)
-Modifie les informations de l’utilisateur en base de données.
 
 - public function isConnected()
 Retourne un booléen permettant de savoir si un utilisateur est connecté ou
