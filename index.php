@@ -11,14 +11,16 @@ $marie = new user();
 
 //-------------------------------------------------------------------------
 
-$marie->connect('marielolabc', 'mariepass');
+$marie->connect('marie', 'pass');
 
 //dump les infos dans un tableau
 
 
-$marie->disconnect();
+//$marie->disconnect();
 
 //$marie->delete();
+
+$marie->update('marieM', 'pass','marie.clerc@laplateforme.io','MMarie', 'clerc');
 
 
 

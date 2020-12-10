@@ -111,9 +111,9 @@ class user
                 $this->email = '';
                 $this->firstname = '';
                 $this->lastname = '';
-                echo 'vous etes deco';
+                echo 'vous etes deconecté';
             }
-            else echo 'non';
+            else echo 'la déconnexion a échoué';
         }
 
     /*----------------------------------------------------------------------------------------------------*/
@@ -138,9 +138,37 @@ class user
     /*----------------------------------------------------------------------------------------------------*/
 
 
-    public function update()
+    public function update($login, $password, $email, $firstname, $lastname)
     { 
-        
+        $db = mysqli_connect('localhost','root', '', 'classes');
+
+        //mysqli real escpae string attend 2 parametres
+        $login = mysqli_real_escape_string($db, htmlspecialchars(trim($login)));
+        $password = $hash = mysqli_real_escape_string($db, htmlspecialchars(trim(password_hash($password, PASSWORD_BCRYPT))));
+        $email = mysqli_real_escape_string($db, htmlspecialchars(trim($email)));
+        $firstname = mysqli_real_escape_string($db, htmlspecialchars(trim($firstname)));
+        $lastname = mysqli_real_escape_string($db, htmlspecialchars(trim($lastname)));
+
+        if (isset($login) && isset($password) && isset($email) && isset($firstname) && isset($lastname)) 
+        {
+            //regarder si le login existe deja
+            $reqlogin = mysqli_query($db,"SELECT * FROM `utilisateurs` WHERE `login`='$login'");
+            // si il y a un résultat, mysqli_num_rows() nous donnera alors 1
+            // si mysqli_num_rows() retourne 0 c'est qu'il a trouvé aucun résultat
+            if(mysqli_num_rows($reqlogin) == 0) 
+            { 
+                //enregistrer les infos dans la bdd 
+                $requpdate = mysqli_query($db,"UPDATE `utilisateurs` SET `login`='$login',`password`='$password',`email`='$email',`firstname`='$firstname',`lastname`='$lastname' WHERE id='$this->id'");
+                if ($requpdate) 
+                {
+                    echo 'Vous avez mis votre profil à jour';
+                    return $requpdate;
+                }
+                else echo 'ca marche pas (la req pour update)';
+            }
+            else echo 'le nouveau login choisi existe déjà';
+        }
+        else echo 'remplir tous les champs';
     }
 
 
