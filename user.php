@@ -30,20 +30,32 @@ class user
 
         if (isset($login) && isset($password) && isset($email) && isset($firstname) && isset($lastname)) 
         {
-            $req = mysqli_query($db, "INSERT INTO `utilisateurs`(`login`, `password`, `email`, `fisrtname`, `lastname`) VALUES ('$login', '$password', '$email', '$firstname', '$lastname')");
-            if ($req) {
-                echo 'vous etes bien enregistré';
-                return $req;
+            //regarder si le login existe deja
+            $reqlogin = mysqli_query($db,"SELECT * FROM `utilisateurs` WHERE `login`='$login'");
+            // si il y a un résultat, mysqli_num_rows() nous donnera alors 1
+            // si mysqli_num_rows() retourne 0 c'est qu'il a trouvé aucun résultat
+            if(mysqli_num_rows($query) == 0) 
+            { 
+                //enregistrer les infos dans la bdd 
+                $req = mysqli_query($db, "INSERT INTO `utilisateurs`(`login`, `password`, `email`, `fisrtname`, `lastname`) VALUES ('$login', '$password', '$email', '$firstname', '$lastname')");
+                if ($req) {
+                    echo 'vous etes bien enregistré';
+                    return $req;
+                }
+                else echo 'ca marche pas (la req pour insert into)';
             }
-            else echo 'ca marche pas';
+            else echo 'login existe déjà';
         }
         else echo 'remplir tous les champs';
     }
+
+    public function connect($login, $password) 
+    {
+
+    }
 }
 
-/* 
-Crée l’utilisateur en base de données. Retourne un tableau contenant
-l’ensemble des informations concernant l’utilisateur créé.
+/*
 
 - public function connect($login, $password)
 Connecte l’utilisateur, modifie les attributs présents dans la classe et
