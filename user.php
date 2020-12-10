@@ -34,13 +34,13 @@ class user
             $reqlogin = mysqli_query($db,"SELECT * FROM `utilisateurs` WHERE `login`='$login'");
             // si il y a un résultat, mysqli_num_rows() nous donnera alors 1
             // si mysqli_num_rows() retourne 0 c'est qu'il a trouvé aucun résultat
-            if(mysqli_num_rows($query) == 0) 
+            if(mysqli_num_rows($reqlogin) == 0) 
             { 
                 //enregistrer les infos dans la bdd 
-                $req = mysqli_query($db, "INSERT INTO `utilisateurs`(`login`, `password`, `email`, `fisrtname`, `lastname`) VALUES ('$login', '$password', '$email', '$firstname', '$lastname')");
-                if ($req) {
+                $reqinsert = mysqli_query($db,"INSERT INTO `utilisateurs`(`login`, `password`, `email`, `firstname`, `lastname`) VALUES (\"$login\", \"$password\", \"$email\", \"$firstname\", \"$lastname\")");
+                if ($reqinsert) {
                     echo 'vous etes bien enregistré';
-                    return $req;
+                    return $reqinsert;
                 }
                 else echo 'ca marche pas (la req pour insert into)';
             }
@@ -49,7 +49,7 @@ class user
         else echo 'remplir tous les champs';
     }
 
-/*----------------------------------------------------------------------------------------------------*/
+    /*----------------------------------------------------------------------------------------------------*/
     
     public function connect($login, $password) 
     {
@@ -82,6 +82,7 @@ class user
                 {
                     echo 'vous etes connecté';
                     //mon tableau $var que je fait plus haut me sert pour set mes this 
+                    $this->id = $var['id'];
                     $this->login = $var ['login'];
                     $this->password = $var ['password'];
                     $this->email = $var ['email'];
@@ -104,10 +105,43 @@ class user
             $db = mysqli_connect('localhost','root', '', 'classes');
             if (mysqli_close($db))
             {
+                $this->id = '';
+                $this->login = '';
+                $this->password = '';
+                $this->email = '';
+                $this->firstname = '';
+                $this->lastname = '';
                 echo 'vous etes deco';
             }
             else echo 'non';
         }
+
+    /*----------------------------------------------------------------------------------------------------*/
+
+
+    public function delete() 
+    {
+        $db = mysqli_connect("localhost", "root", "", "classes"); 
+        
+        $sql = "DELETE FROM utilisateurs WHERE id='$this->id'";
+
+        if(mysqli_query($db, $sql)){ 
+            echo 'Suppression des données avec succès'; 
+        }  
+        else 
+        {
+            echo 'echec de la suppression des données';
+        }
+        mysqli_close($db); 
+    }
+
+    /*----------------------------------------------------------------------------------------------------*/
+
+
+    public function update()
+    { 
+        
+    }
 
 
 
@@ -117,10 +151,6 @@ class user
 
 /*
 
-- public function disconnect()
-Déconnecte l’utilisateur.
-- public function delete()
-Supprime et déconnecte l’utilisateur.
 - public function update($login, $password, $email, $firstname,
 lastname)
 Modifie les informations de l’utilisateur en base de données.
