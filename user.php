@@ -181,37 +181,63 @@ class user
             echo 'L\'utilisateur ' .$this->login. ' est connecté.';
             return true;
         }
-        else echo 'pas d\'utilisateur connecté';
+        else echo 'Vous êtes déconnecté';
+        return false;
     }
 
+    /*----------------------------------------------------------------------------------------------------*/
 
 
+    public function getAllInfos()
+    { 
+        //on se connecte à la base de données:
+        $db = mysqli_connect('localhost','root', '', 'classes');
+        //on fait la requête dans la bd pour rechercher si ces données existent et correspondent:
+        $query = mysqli_query($db,"SELECT * FROM `utilisateurs` WHERE id='$this->id'");
+        //variable necessaire pour récupérer les infos du l'utilisateur, et pour les utiliser sur d'autre page 
+        $var = mysqli_fetch_assoc($query);// résultat mis dans un tableau, une ligne par résultat si 
+        return $var;
+    }
+
+    /*----------------------------------------------------------------------------------------------------*/
 
 
-}
+    public function getLogin()
+    {
+        return $this->login;
+    }
 
-/*
+    /*----------------------------------------------------------------------------------------------------*/
 
-- public function isConnected()
-Retourne un booléen permettant de savoir si un utilisateur est connecté ou
-non.
 
-- public function getAllInfos()
-Retourne un tableau contenant l’ensemble des informations de l’utilisateur.
+    public function getEmail()
+    {
+        return $this->email;
+    }
 
-- public function getLogin()
-Retourne le login de l’utilisateur connecté.
+    /*----------------------------------------------------------------------------------------------------*/
 
-- public function getEmail()
-Retourne l’adresse email de l’utilisateur connecté.
 
-- public function getFirstname()
-Retourne le firstname de l’utilisateur connecté.
+    public function getFirstname()
+    {
+        return $this->firstname;
+    }
 
-- public function getLastname()
-Retourne le lastname de l’utilisateur connecté.
+    /*----------------------------------------------------------------------------------------------------*/
 
-- public function refresh()
-Met à jour les attributs de la classe à partir de la base de données.
-Vos requêtes SQL doivent être faites à l’aide des fonctions mysqli*.*/
-?>
+
+    public function getLastname()
+    {
+        return $this->lastname;
+    }
+
+    /*----------------------------------------------------------------------------------------------------*/
+
+
+    public function refresh()
+    {
+        header("Refresh:10");
+        exit;
+    }
+
+}?>

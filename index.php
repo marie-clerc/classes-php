@@ -20,11 +20,21 @@ $marie->connect('marieM', 'pass');
 
 //$marie->delete();
 
-//$marie->update('marieM', 'pass','marie.clerc@laplateforme.io','MMarie', 'clerc');
+$marie->update('marie', 'pass','marie.clerc@laplateforme.io','MMarie', 'clerc');
 
-$marie->isConnected();
+//$marie->isConnected();
 
+//$marie->getAllInfos();
 
+//$marie->getLogin();
+
+//$marie->getEmail();
+
+//$marie->getFirstname();
+
+//$marie->getLastname();
+
+$marie->refresh();
 
 
 var_dump($marie);
