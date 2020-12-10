@@ -11,9 +11,11 @@ var_dump($marie);*/
 
 //-------------------------------------------------------------------------
 
-$marie->connect('marielol', 'mariepass');
+/*$marie->connect('marielol', 'mariepass');
 //dump les infos dans un tableau
-var_dump($marie);
+var_dump($marie);*/
+
+$marie->disconnect();
 
 
 

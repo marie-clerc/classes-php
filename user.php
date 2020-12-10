@@ -95,13 +95,28 @@ class user
         }
         else echo 'remplir tous les champs pour se connecter';
     }
+
+    /*----------------------------------------------------------------------------------------------------*/
+        
+        
+        public function disconnect()
+        {
+            $db = mysqli_connect('localhost','root', '', 'classes');
+            if (mysqli_close($db))
+            {
+                echo 'vous etes deco';
+            }
+            else echo 'non';
+        }
+
+
+
+
+
 }
 
 /*
 
-- public function connect($login, $password)
-Connecte l’utilisateur, modifie les attributs présents dans la classe et
-retourne un tableau contenant l’ensemble de ses informations.
 - public function disconnect()
 Déconnecte l’utilisateur.
 - public function delete()
