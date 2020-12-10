@@ -49,9 +49,51 @@ class user
         else echo 'remplir tous les champs';
     }
 
+/*----------------------------------------------------------------------------------------------------*/
+    
     public function connect($login, $password) 
     {
+        if(isset($login) && isset($password))
+        {
+            //on se connecte à la base de données:
+            $db = mysqli_connect('localhost','root', '', 'classes');
+            //on fait la requête dans la bd pour rechercher si ces données existent et correspondent:
+            $query = mysqli_query($db,"SELECT * FROM `utilisateurs` WHERE login='$login'");
 
+            //variable necessaire pour récupérer les infos du l'utilisateur, et pour les utiliser sur d'autre page 
+            $var = mysqli_fetch_array($query);// résultat mis dans un tableau, une ligne par résultat si xieurs
+            
+            // si il y a un résultat, mysqli_num_rows() nous donnera alors 1
+            // si mysqli_num_rows() retourne 0 c'est qu'il a trouvé aucun résultat
+            if(mysqli_num_rows($query) == 0) {
+                echo "Le login n'existe pas";
+            }
+            //si login exist, vérifier le hash password et le password entré par l'utilisateur
+            else if (mysqli_num_rows($query) == 1) 
+            {
+                //je fait la requête pour le password qui correspont au login. 
+                $query2 = mysqli_query($db, "SELECT password FROM `utilisateurs` WHERE login=\"$login\"");
+                //je vais créer un tableau avec mon résultat
+                $row = mysqli_fetch_array($query2);
+                //je transforme ma ligne password (ligne de la bdd) en variable
+                $hash = $row['password'];
+                //je vérif si post password et le password dans bdd : row password, sont les mêmes
+                if(password_verify($password, $hash)) //toujours dans cet ordre
+                {
+                    echo 'vous etes connecté';
+                    //mon tableau $var que je fait plus haut me sert pour set mes this 
+                    $this->login = $var ['login'];
+                    $this->password = $var ['password'];
+                    $this->email = $var ['email'];
+                    $this->firstname = $var ['firstname'];
+                    $this->lastname = $var ['lastname'];
+                }
+                else {
+                    echo 'mdp incorrect';
+                }
+            }
+        }
+        else echo 'remplir tous les champs pour se connecter';
     }
 }
 
