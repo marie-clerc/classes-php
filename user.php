@@ -237,7 +237,6 @@ class user
     public function refresh()
     {
         header("Refresh:10");
-        exit;
     }
 
 }
