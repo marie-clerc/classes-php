@@ -256,7 +256,6 @@ $marie->connect('marieM', 'pass');
 
 //dump les infos dans un tableau
 
-
 //$marie->disconnect();
 
 //$marie->delete();
