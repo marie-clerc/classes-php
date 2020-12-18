@@ -105,12 +105,12 @@ class user
             $db = mysqli_connect('localhost','root', '', 'classes');
             if (mysqli_close($db))
             {
-                $this->id = '';
-                $this->login = '';
-                $this->password = '';
-                $this->email = '';
-                $this->firstname = '';
-                $this->lastname = '';
+                $this->id = null;
+                $this->login = null;
+                $this->password = null;
+                $this->email = null;
+                $this->firstname = null;
+                $this->lastname = null;
                 echo 'vous etes deconecté';
             }
             else echo 'la déconnexion a échoué';
